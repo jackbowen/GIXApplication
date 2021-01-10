@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]><html class="preIE7 preIE8 preIE9"><![endif]-->
+<!--[if IE 7]><html class="preIE8 preIE9"><![endif]-->
+<!--[if IE 8]><html class="preIE9"><![endif]-->
+<!--[if gte IE 9]><!--><html><!--<![endif]-->
+  <head>
+    <title>GIX Application</title>
+    <meta charset="utf-8"/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">-->
+    <link href="../stylesheets/main.css" rel="stylesheet" type="text/css" />
+
+    <script src="../js/leaflet-1.0.0.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="../js/projects.js" type="text/javascript"></script>
+    <script src="../js/map.js" type="text/javascript"></script>
+
+  </head>
+  
+
+
+
+
+
+
+  <body onload="initMap()">
+    <span id="ruler"></span>
+
+    <div id="mapContent" class="projectContent">
+      <h1 class="projectTitle">Mapping Stop+Frisk</h1>
+      <h2 class="projectAbstract">A data visualization of every stop made under NYC's stop-and-frisk program from 2005-2015</h2>
+
+      <img class="splashImage" src="../resources/exhibit.jpg" alt="gallery display of printed maps" />
+      <p class="imageCaption">Posters on display at Columbia University's Reid Hall</p>
+
+      <p class="projectDescription">The stop-question-and-frisk program, or stop-and-frisk, is a practice of the New York City Police Department in which police officers stop and question a pedestrian, then frisk them for weapons and other contraband without obtaining a warrant. Opponents of this practice argue that it greenlights racial profiling, specifically targeting young Black and Latino males. This software creates a visualization of each stop carried out due to this policy. It is meant to help illuminate whether POC, specifically those in lower-income neighborhoods are disproportionately targeted in this program. An x is placed in the location of each stop with its color based upon the race of the person being stopped.</p>
+
+      <ul id="yearSelector">
+        <li onclick="selectYear(2006)" id="2006" class="notLast">
+        2006</li><li onclick="selectYear(2007)" id="2007" class="notLast">
+        2007</li><li onclick="selectYear(2008)" id="2008" class="notLast">
+        2008</li><li onclick="selectYear(2009)" id="2009" class="notLast">
+        2009</li><li onclick="selectYear(2010)" id="2010" class="notLast">
+        2010</li><li onclick="selectYear(2011)" id="2011" class="possiblyLast">
+        2011</li><li onclick="selectYear(2012)" id="2012" class="notLast">
+        2012</li><li onclick="selectYear(2013)" id="2013" class="notLast">
+        2013</li><li onclick="selectYear(2014)" id="2014" class="notLast">
+        2014</li><li onclick="selectYear(2015)" id="2015" class="last">
+        2015</li>
+      </ul>
+
+      <div id="map"></div>
+      <!-- TODO: a div behind map that says "loading" -->
+
+      <p id="mapSpacer" class="projectDescription">These maps were originally designed for print for a New York audience so there are a few assumptions made concerning the target audience’s knowledge. It is assumed that the viewer is aware of the general wealth and ethnic makeup of major neighborhoods as well as which ones are heavily populated. If you’re not familiar with NYC, see <a href="http://www.undertheraedar.com/2012/01/population-density-in-new-york-city.html">here</a> for a quick rundown of each borough and how heavily populated it is. For a brief overview of the racial and ethnic makeup of the city see <a href="https://furmancenter.org/files/sotc/The_Changing_Racial_and_Ethnic_Makeup_of_New_York_City_Neighborhoods_11.pdf">here</a>. Take note of figure B on page 33, specifically the upper left map detailing what share of each neighborhood is made up of non-Hispanic whites. The stop-and-frisk maps generated with this software are essentially an inversion of this map. With this knowledge, we can begin to make some inferences from the above maps.</p>
+
+      <p class="projectDescription">We can begin in Manhattan by looking at Central Park, the rectangular void in the middle of the island. The predominantly white neighborhoods that lie east and west of the park show noticeably less activity than the neighborhoods to the north of them despite having roughly the same population density. North of the park lies Harlem, a historically black neighborhood, where we can see a much higher concentration of stops. Northwest of Harlem is Washington Heights with its mostly black-Hispanic population. Again, we see a disproportionate number of stops. In Queens we see a cluster of stops that occur in the majority Hispanic neighborhoods of Jackson Heights and Elmhurst. South of Broadway in Brooklyn shows an alarming number of stops despite being much less populated than most of Manhattan.</p>
+
+      <!-- TODO: before and after image -->
+
+      <p class="projectDescription">One issue I ran into when trying to visualize the information was how to represent when certain locations had repeat stops. My first inclination was to reduce the opacity for each stop marker. Because each marker was semi-transparent, places that had repeat stops would become more opaque and consequently more vibrant against their black and white backdrop. In practice, the transparency that I had to reduce individual stops to in order to have any granularity in areas with repeat stops meant that the singular ones were almost non-existent. At the same time, any location that had a variety of ethnicities stopped in the same place would blend together. Eventually I settled on placing a very small but vibrant x at each stop location. I would also place a much larger x in the same spot with a gradient stroke that was near transparent at the tips and more opaque at the center. This allowed for individual stops to be registered but also allowed for repeat patterns to appear. Rotating the x of each ethnicity by a specific amount allowed for legibility when there were multiple stops in the same spot. </p>
+
+      <p class="projectDescription">The other main challenge I faced in creating these maps was just scraping the data itself. The data was originally released by the <a href="http://www1.nyc.gov/site/nypd/stats/reports-analysis/stopfrisk.page">NYPD</a> as a POR file with about 80 variables for each stop but no way to interpret them. A lawsuit filed by the NYCLU allowed them to create a codebook to understand what each of the columns meant, the most recent version of which can be found at the bottom of <a href="https://www.nyclu.org/en/stop-and-frisk-data">this page</a>. With this knowledge, and a Python library to convert the given EPSG location coordinates into more traditionally understood lat/long coordinates, I was able to generate legible CSVs for each year’s data. These maps were originally made in 2012 near the height of this practice and during a time when much of the city was challenging the validity of it. Being able to share comprehensible data with those involved in the struggle who were slightly less tech-savvy was one of the great accomplishments of this project. The NYPD has since released the data in a more readable format.</p>
+
+      <p class="projectDescription">The number of stops peaked in 2011 with 685,724 stops. Since then, the number of stops has gone down each year due to public outcry and a <a href="www.nysd.uscourts.gov/cases/show.php?db=special&id=317">2013 ruling</a> by a U.S. District Court judge saying that the practice, but not the law behind it, was unconstitutional.</p>
+
+    </div>
+  </body>
+</html>

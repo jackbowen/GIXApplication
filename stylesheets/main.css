@@ -1,0 +1,1087 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: 'pixelcomicsansregular';
+  src: url("../resources/fonts/pixelcomicsans-regular-webfont.woff2") format("woff2"), url("../resources/fonts/pixelcomicsans-regular-webfont.woff") format("woff"), url("../resources/fonts/pixelcomicsans-regular-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Inconsolata Regular"), local("Inconsolata-Regular"), url(../resources/fonts/QldKNThLqRwH-OJ1UHjlKGlW5qhExfHwNJU.woff2) format("woff2");
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Inconsolata Regular"), local("Inconsolata-Regular"), url(../resources/fonts/QldKNThLqRwH-OJ1UHjlKGlX5qhExfHwNJU.woff2) format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Inconsolata Regular"), local("Inconsolata-Regular"), url(../resources/fonts/QldKNThLqRwH-OJ1UHjlKGlZ5qhExfHw.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* line 59, ../sass/main.scss */
+body {
+  background-color: #E8D2BE;
+  font-family: 'Inconsolata', monospace;
+}
+
+/* line 64, ../sass/main.scss */
+#ruler {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+/* line 71, ../sass/main.scss */
+.projectContent {
+  background-color: #E8D2BE;
+  width: 90%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0;
+  z-index: 1;
+  color: #3D4F39;
+}
+/* line 81, ../sass/main.scss */
+.projectContent .projectTitle {
+  color: #3D4F39;
+  font-family: 'Inconsolata', monospace;
+  font-size: 2em;
+  font-size: 5em;
+  width: 90%;
+}
+/* line 94, ../sass/main.scss */
+.projectContent .splashImage {
+  width: 100%;
+}
+/* line 99, ../sass/main.scss */
+.projectContent .imageCaption {
+  color: #555;
+}
+/* line 103, ../sass/main.scss */
+.projectContent .projectDescription {
+  font-size: 1.5em;
+  margin-top: .8em;
+}
+/* line 108, ../sass/main.scss */
+.projectContent sup {
+  font-size: .6em;
+  vertical-align: top;
+}
+/* line 113, ../sass/main.scss */
+.projectContent .references {
+  display: block;
+}
+/* line 117, ../sass/main.scss */
+.projectContent #lastReference {
+  margin-bottom: 30px;
+}
+/* line 121, ../sass/main.scss */
+.projectContent hr {
+  border: 1px solid #3D4F39;
+}
+/* line 125, ../sass/main.scss */
+.projectContent a {
+  color: #4a617a;
+}
+/* line 134, ../sass/main.scss */
+.projectContent #map {
+  margin-top: 1em;
+  position: absolute;
+  width: 90vmin;
+  height: 90vmin;
+  background-color: red;
+}
+/* line 169, ../sass/main.scss */
+.projectContent #yearSelector {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+/* line 177, ../sass/main.scss */
+.projectContent #yearSelector li {
+  cursor: pointer;
+  display: inline-block;
+  width: 9.65%;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  text-align: center;
+}
+/* line 188, ../sass/main.scss */
+.projectContent #yearSelector li.notLast {
+  border-right: 2px solid #3D4F39;
+}
+/* line 192, ../sass/main.scss */
+.projectContent #yearSelector li.possiblyLast {
+  border-right: 2px solid #3D4F39;
+}
+/* line 196, ../sass/main.scss */
+.projectContent #yearSelector li:hover {
+  text-decoration: underline;
+}
+/* line 200, ../sass/main.scss */
+.projectContent #yearSelector li.active {
+  background: #3D4F39;
+  color: #E8D2BE;
+}
+/* line 206, ../sass/main.scss */
+.projectContent #mapLegend {
+  position: relative;
+  z-index: 69420;
+  border: 0px solid rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  border-radius: 4px;
+  background-color: #fff;
+  margin-left: 10px;
+  padding: 10px;
+  opacity: 0.8;
+  bottom: 0;
+}
+/* line 218, ../sass/main.scss */
+.projectContent #mapLegend .dot {
+  text-shadow: 0px 0px black;
+}
+/* line 222, ../sass/main.scss */
+.projectContent #mapLegend #asianPacIslander {
+  color: #00f;
+}
+/* line 225, ../sass/main.scss */
+.projectContent #mapLegend #black {
+  color: #f00;
+}
+/* line 228, ../sass/main.scss */
+.projectContent #mapLegend #amIndianAlaskan {
+  color: #ff0;
+}
+/* line 231, ../sass/main.scss */
+.projectContent #mapLegend #blackHispanic {
+  color: #0f0;
+}
+/* line 234, ../sass/main.scss */
+.projectContent #mapLegend #whiteHispanic {
+  color: #0ff;
+}
+/* line 237, ../sass/main.scss */
+.projectContent #mapLegend #white {
+  color: #f0f;
+}
+/* line 240, ../sass/main.scss */
+.projectContent #mapLegend #other {
+  color: #000;
+}
+
+/* required styles */
+/* line 315, ../sass/main.scss */
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-map-pane svg,
+.leaflet-map-pane canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* line 329, ../sass/main.scss */
+.leaflet-container {
+  overflow: hidden;
+}
+
+/* line 332, ../sass/main.scss */
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+/* line 341, ../sass/main.scss */
+.leaflet-safari .leaflet-tile {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* hack that prevents hw layers "stretching" when loading new tiles */
+/* line 345, ../sass/main.scss */
+.leaflet-safari .leaflet-tile-container {
+  width: 1600px;
+  height: 1600px;
+  -webkit-transform-origin: 0 0;
+}
+
+/* line 350, ../sass/main.scss */
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  display: block;
+}
+
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+/* line 356, ../sass/main.scss */
+.leaflet-container .leaflet-overlay-pane svg,
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer {
+  max-width: none !important;
+}
+
+/* line 363, ../sass/main.scss */
+.leaflet-container.leaflet-touch-zoom {
+  -ms-touch-action: pan-x pan-y;
+  touch-action: pan-x pan-y;
+}
+
+/* line 367, ../sass/main.scss */
+.leaflet-container.leaflet-touch-drag {
+  -ms-touch-action: pinch-zoom;
+}
+
+/* line 370, ../sass/main.scss */
+.leaflet-container.leaflet-touch-drag.leaflet-touch-drag {
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+/* line 374, ../sass/main.scss */
+.leaflet-tile {
+  filter: inherit;
+  visibility: hidden;
+}
+
+/* line 378, ../sass/main.scss */
+.leaflet-tile-loaded {
+  visibility: inherit;
+}
+
+/* line 381, ../sass/main.scss */
+.leaflet-zoom-box {
+  width: 0;
+  height: 0;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: 800;
+}
+
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+/* line 389, ../sass/main.scss */
+.leaflet-overlay-pane svg {
+  -moz-user-select: none;
+}
+
+/* line 393, ../sass/main.scss */
+.leaflet-pane {
+  z-index: 400;
+}
+
+/* line 395, ../sass/main.scss */
+.leaflet-tile-pane {
+  z-index: 200;
+}
+
+/* line 396, ../sass/main.scss */
+.leaflet-overlay-pane {
+  z-index: 400;
+}
+
+/* line 397, ../sass/main.scss */
+.leaflet-shadow-pane {
+  z-index: 500;
+}
+
+/* line 398, ../sass/main.scss */
+.leaflet-marker-pane {
+  z-index: 600;
+}
+
+/* line 399, ../sass/main.scss */
+.leaflet-tooltip-pane {
+  z-index: 650;
+}
+
+/* line 400, ../sass/main.scss */
+.leaflet-popup-pane {
+  z-index: 700;
+}
+
+/* line 402, ../sass/main.scss */
+.leaflet-map-pane canvas {
+  z-index: 100;
+}
+
+/* line 403, ../sass/main.scss */
+.leaflet-map-pane svg {
+  z-index: 200;
+}
+
+/* line 405, ../sass/main.scss */
+.leaflet-vml-shape {
+  width: 1px;
+  height: 1px;
+}
+
+/* line 409, ../sass/main.scss */
+.lvml {
+  behavior: url(#default#VML);
+  display: inline-block;
+  position: absolute;
+}
+
+/* control positioning */
+/* line 418, ../sass/main.scss */
+.leaflet-control {
+  position: relative;
+  z-index: 800;
+  pointer-events: visiblePainted;
+  /* IE 9-10 doesn't have auto */
+  pointer-events: auto;
+}
+
+/* line 424, ../sass/main.scss */
+.leaflet-top,
+.leaflet-bottom {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* line 431, ../sass/main.scss */
+.leaflet-top.leaflet-right {
+  top: 0;
+}
+
+/* line 434, ../sass/main.scss */
+.leaflet-right {
+  right: 0;
+}
+
+/* line 437, ../sass/main.scss */
+.leaflet-bottom {
+  bottom: 0;
+}
+
+/* line 440, ../sass/main.scss */
+.leaflet-left.leaflet-top {
+  right: 0;
+}
+
+/* line 453, ../sass/main.scss */
+.leaflet-bottom .leaflet-control {
+  margin-bottom: 10px;
+}
+
+/* line 456, ../sass/main.scss */
+.leaflet-left .leaflet-control {
+  margin-right: 10px;
+}
+
+/* zoom and fade animations */
+/* line 467, ../sass/main.scss */
+.leaflet-fade-anim .leaflet-tile {
+  will-change: opacity;
+}
+
+/* line 470, ../sass/main.scss */
+.leaflet-fade-anim .leaflet-popup {
+  opacity: 0;
+  -webkit-transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.2s linear;
+  -o-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+
+/* line 477, ../sass/main.scss */
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+  opacity: 1;
+}
+
+/* line 480, ../sass/main.scss */
+.leaflet-zoom-animated {
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+
+/* line 485, ../sass/main.scss */
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  will-change: transform;
+}
+
+/* line 488, ../sass/main.scss */
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  -webkit-transition: -webkit-transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+  -moz-transition: -moz-transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+  -o-transition: -o-transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+  transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+}
+
+/* line 494, ../sass/main.scss */
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+/* line 502, ../sass/main.scss */
+.leaflet-zoom-anim .leaflet-zoom-hide {
+  visibility: hidden;
+}
+
+/* cursors */
+/* line 509, ../sass/main.scss */
+.leaflet-interactive {
+  cursor: pointer;
+}
+
+/* line 512, ../sass/main.scss */
+.leaflet-grab {
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+/* line 516, ../sass/main.scss */
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+  cursor: crosshair;
+}
+
+/* line 520, ../sass/main.scss */
+.leaflet-popup-pane,
+.leaflet-control {
+  cursor: auto;
+}
+
+/* line 524, ../sass/main.scss */
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
+
+/* marker & overlays interactivity */
+/* line 533, ../sass/main.scss */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+  pointer-events: none;
+}
+
+/* line 541, ../sass/main.scss */
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive {
+  pointer-events: visiblePainted;
+  /* IE 9-10 doesn't have auto */
+  pointer-events: auto;
+}
+
+/* visual tweaks */
+/* line 550, ../sass/main.scss */
+.leaflet-container {
+  background: #ddd;
+  outline: 0;
+}
+
+/* line 554, ../sass/main.scss */
+.leaflet-container a {
+  color: #0078A8;
+}
+
+/* line 557, ../sass/main.scss */
+.leaflet-container a.leaflet-active {
+  outline: 2px solid orange;
+}
+
+/* line 560, ../sass/main.scss */
+.leaflet-zoom-box {
+  border: 2px dotted #38f;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* general typography */
+/* general toolbar styles */
+/* line 575, ../sass/main.scss */
+.leaflet-bar {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+}
+
+/* line 579, ../sass/main.scss */
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+/* line 591, ../sass/main.scss */
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  display: block;
+}
+
+/* line 597, ../sass/main.scss */
+.leaflet-bar a:hover {
+  background-color: #f4f4f4;
+}
+
+/* line 600, ../sass/main.scss */
+.leaflet-bar a:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* line 604, ../sass/main.scss */
+.leaflet-bar a:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom: none;
+}
+
+/* line 609, ../sass/main.scss */
+.leaflet-bar a.leaflet-disabled {
+  cursor: default;
+  background-color: #f4f4f4;
+  color: #bbb;
+}
+
+/* line 615, ../sass/main.scss */
+.leaflet-touch .leaflet-bar a {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+
+/* zoom control */
+/* line 624, ../sass/main.scss */
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  font: bold 18px 'Lucida Console', Monaco, monospace;
+  text-indent: 1px;
+}
+
+/* line 629, ../sass/main.scss */
+.leaflet-control-zoom-out {
+  font-size: 20px;
+}
+
+/* line 633, ../sass/main.scss */
+.leaflet-touch .leaflet-control-zoom-in {
+  font-size: 22px;
+}
+
+/* line 636, ../sass/main.scss */
+.leaflet-touch .leaflet-control-zoom-out {
+  font-size: 24px;
+}
+
+/* layers control */
+/*
+.leaflet-control-layers {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background: #fff;
+  border-radius: 5px;
+  }
+.leaflet-control-layers-toggle {
+  background-image: url(images/layers.png);
+  width: 36px;
+  height: 36px;
+  }
+.leaflet-retina .leaflet-control-layers-toggle {
+  background-image: url(images/layers-2x.png);
+  background-size: 26px 26px;
+  }
+.leaflet-touch .leaflet-control-layers-toggle {
+  width: 44px;
+  height: 44px;
+  }
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+  display: none;
+  }
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+  display: block;
+  position: relative;
+  }
+.leaflet-control-layers-expanded {
+  padding: 6px 10px 6px 6px;
+  color: #333;
+  background: #fff;
+  }
+.leaflet-control-layers-scrollbar {
+  overflow-y: scroll;
+  padding-right: 5px;
+  }
+.leaflet-control-layers-selector {
+  margin-top: 2px;
+  position: relative;
+  top: 1px;
+  }
+.leaflet-control-layers label {
+  display: block;
+  }
+.leaflet-control-layers-separator {
+  height: 0;
+  border-top: 1px solid #ddd;
+  margin: 5px -10px 5px -6px;
+  }
+
+*/
+/* attribution and scale controls */
+/* line 696, ../sass/main.scss */
+.leaflet-container .leaflet-control-attribution {
+  background: #fff;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* line 701, ../sass/main.scss */
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+  padding: 0 5px;
+  color: #333;
+}
+
+/* line 706, ../sass/main.scss */
+.leaflet-control-attribution a {
+  text-decoration: none;
+}
+
+/* line 709, ../sass/main.scss */
+.leaflet-control-attribution a:hover {
+  text-decoration: underline;
+}
+
+/* line 712, ../sass/main.scss */
+.leaflet-control-attribution {
+  visibility: hidden;
+}
+
+/* line 719, ../sass/main.scss */
+.leaflet-left .leaflet-control-scale {
+  margin-left: 5px;
+}
+
+/* line 722, ../sass/main.scss */
+.leaflet-bottom .leaflet-control-scale {
+  margin-bottom: 5px;
+}
+
+/* line 725, ../sass/main.scss */
+.leaflet-control-scale-line {
+  border: 2px solid #777;
+  border-top: none;
+  line-height: 1.1;
+  padding: 2px 5px 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* line 739, ../sass/main.scss */
+.leaflet-control-scale-line:not(:first-child) {
+  border-top: 2px solid #777;
+  border-bottom: none;
+  margin-top: -2px;
+}
+
+/* line 744, ../sass/main.scss */
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+  border-bottom: 2px solid #777;
+}
+
+/* line 748, ../sass/main.scss */
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+  box-shadow: none;
+}
+
+/* line 753, ../sass/main.scss */
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+  border: 0px solid rgba(0, 0, 0, 0.2);
+  /* Jack was here */
+  background-clip: padding-box;
+}
+
+/* popup */
+/* line 762, ../sass/main.scss */
+.leaflet-popup {
+  position: absolute;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* line 767, ../sass/main.scss */
+.leaflet-popup-content-wrapper {
+  padding: 1px;
+  text-align: left;
+  border-radius: 12px;
+}
+
+/* line 772, ../sass/main.scss */
+.leaflet-popup-content {
+  margin: 13px 19px;
+  line-height: 1.4;
+}
+
+/* line 776, ../sass/main.scss */
+.leaflet-popup-content p {
+  margin: 18px 0;
+}
+
+/* line 779, ../sass/main.scss */
+.leaflet-popup-tip-container {
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  left: 50%;
+  margin-left: -20px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* line 788, ../sass/main.scss */
+.leaflet-popup-tip {
+  width: 17px;
+  height: 17px;
+  padding: 1px;
+  margin: -10px auto 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* line 801, ../sass/main.scss */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: white;
+  color: #333;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* line 807, ../sass/main.scss */
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px 4px 0 0;
+  border: none;
+  text-align: center;
+  width: 18px;
+  height: 14px;
+  color: #c3c3c3;
+  text-decoration: none;
+  font-weight: bold;
+  background: transparent;
+}
+
+/* line 822, ../sass/main.scss */
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: #999;
+}
+
+/* line 825, ../sass/main.scss */
+.leaflet-popup-scrolled {
+  overflow: auto;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+
+/* line 831, ../sass/main.scss */
+.leaflet-oldie .leaflet-popup-content-wrapper {
+  zoom: 1;
+}
+
+/* line 834, ../sass/main.scss */
+.leaflet-oldie .leaflet-popup-tip {
+  width: 24px;
+  margin: 0 auto;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+}
+
+/* line 841, ../sass/main.scss */
+.leaflet-oldie .leaflet-popup-tip-container {
+  margin-top: -1px;
+}
+
+/* line 845, ../sass/main.scss */
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+  border: 1px solid #999;
+}
+
+/* div icon */
+/* line 855, ../sass/main.scss */
+.leaflet-div-icon {
+  background: #fff;
+  border: 1px solid #666;
+}
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+/* line 863, ../sass/main.scss */
+.leaflet-tooltip {
+  position: absolute;
+  padding: 6px;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  color: #222;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* line 878, ../sass/main.scss */
+.leaflet-tooltip.leaflet-clickable {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* line 882, ../sass/main.scss */
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  position: absolute;
+  pointer-events: none;
+  border: 6px solid transparent;
+  background: transparent;
+  content: "";
+}
+
+/* Directions */
+/* line 895, ../sass/main.scss */
+.leaflet-tooltip-bottom {
+  margin-top: 6px;
+}
+
+/* line 898, ../sass/main.scss */
+.leaflet-tooltip-top {
+  margin-top: -6px;
+}
+
+/* line 901, ../sass/main.scss */
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+  left: 50%;
+  margin-left: -6px;
+}
+
+/* line 906, ../sass/main.scss */
+.leaflet-tooltip-top:before {
+  bottom: 0;
+  margin-bottom: -12px;
+  border-top-color: #fff;
+}
+
+/* line 911, ../sass/main.scss */
+.leaflet-tooltip-bottom:before {
+  top: 0;
+  margin-top: -12px;
+  margin-left: -6px;
+  border-bottom-color: #fff;
+}
+
+/* line 917, ../sass/main.scss */
+.leaflet-tooltip-left {
+  margin-left: -6px;
+}
+
+/* line 920, ../sass/main.scss */
+.leaflet-tooltip-right {
+  margin-left: 6px;
+}
+
+/* line 923, ../sass/main.scss */
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+  top: 50%;
+  margin-top: -6px;
+}
+
+/* line 928, ../sass/main.scss */
+.leaflet-tooltip-left:before {
+  right: 0;
+  margin-right: -12px;
+  border-left-color: #fff;
+}
+
+/* line 933, ../sass/main.scss */
+.leaflet-tooltip-right:before {
+  left: 0;
+  margin-left: -12px;
+  border-right-color: #fff;
+}
+
+/* line 955, ../sass/main.scss */
+.leaflet-control-attribution {
+  visibility: hidden;
+}
+
+/* line 959, ../sass/main.scss */
+.leaflet-top.leaflet-right {
+  width: 100%;
+}
+
+/* line 963, ../sass/main.scss */
+.leaflet-bottom.leaflet-left {
+  margin-bottom: 10px;
+}
+
+/* line 976, ../sass/main.scss */
+.leaflet-control-layers-selector {
+  display: none;
+}
+
+/* line 980, ../sass/main.scss */
+.leaflet-control-layers-list {
+  text-align: center;
+  font-size: 1.4em;
+}
+
+/* line 986, ../sass/main.scss */
+.leaflet-control-layers-base label {
+  display: inline-block;
+  background: #E8D2BE;
+  margin: 0 auto;
+  width: 14.28571%;
+  padding-bottom: 4px;
+}
+
+@media (min-width: 800px) {
+  /* line 996, ../sass/main.scss */
+  .leaflet-control-layers-base label {
+    width: 7.14285%;
+  }
+}
+/* line 1002, ../sass/main.scss */
+.leaflet-control-layers-base span {
+  cursor: pointer;
+}
+/* line 1006, ../sass/main.scss */
+.leaflet-control-layers-base label:hover {
+  color: #0000ff;
+}
+/* line 1011, ../sass/main.scss */
+.leaflet-control-layers-base input[type="radio"]:checked + span {
+  color: #0000ff;
+  text-decoration: underline;
+}
+
+/* line 1017, ../sass/main.scss */
+.leaflet-top.leaflet-left {
+  bottom: 0;
+  margin-bottom: 10px;
+}
