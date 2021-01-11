@@ -1,11 +1,17 @@
 // Create GUI context
 let _gui;
+let p;
 
 /**
  * Prototype functions to make library 
  * method calls more like p5.js.
  */
 p5.prototype.createGui = function() {
+  _gui = new Gui();
+  return _gui;
+};
+
+p5.prototype.createGui = function(instance) {
   _gui = new Gui();
   return _gui;
 };

@@ -61,11 +61,15 @@ function startMap() {
 }
 
 function selectYear(year) {
-  // Highlight active year on UI
+  
   $('#' + currentYear).removeClass('active');
+  if (stopsMap.hasLayer('../resources/map_tiles/' + currentYear + '.jpg')) {
+    stopsMap.removeLayer('../resources/map_tiles/' + currentYear + '.jpg')
+  }
+
+  // Highlight active year on UI
   $('#' + year).addClass('active');
   currentYear = year;
-
   // Possible TODO: load these in the background for faster swapping between them
   var image = L.imageOverlay('../resources/map_tiles/' + currentYear + '.jpg', bounds).addTo(stopsMap);
 }
