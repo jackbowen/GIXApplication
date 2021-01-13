@@ -1,5 +1,14 @@
 var bgColor = '#FF7C7B';
 var steelColor = '#B4D0DE'; 
+var sliderWidth = 200;
+var sliderHeight = 32;
+var guiMargins = 15;
+var guiInc = sliderHeight + guiMargins;
+var guiLabelSize = 15;
+var guiTextPadding = 4;
+var sliderStart = guiMargins + 100;
+var sliderEnd = guiMargins + sliderWidth - 5;
+var sliderTickPadding = 5;
 
 var baseCreatorSketch = function( bc ) {
   //window.bcp5 = new p5();
@@ -12,11 +21,11 @@ var baseCreatorSketch = function( bc ) {
   let wiggleSlider;
   let lockButton;
 
-  var sliderWidth = 180;
-  var sliderHeight = 32;
-  var sliderX = 15;
-  var xSliderY = 15;
-  var guiInc = sliderHeight + xSliderY;
+  //var sliderWidth = 180;
+  //var sliderHeight = 32;
+  var sliderX = guiMargins;
+  var xSliderY = guiMargins;
+  //var guiInc = sliderHeight + xSliderY;
   var ySliderY = xSliderY + guiInc;
   var wiggleSliderY = ySliderY + guiInc;
   var lockButtonY = wiggleSliderY + guiInc;
@@ -42,16 +51,31 @@ var baseCreatorSketch = function( bc ) {
   
   }
 
+  function clickInteraction() {
+    baseSliders();
+    baseButtons();
+  }
+
+  function mouseMoveInteraction() {
+    if (bc.mouseIsPressed) {
+      baseSliders();
+    }
+  }
+
   bc.setup = () => {
     var baseCreatorWidth = $('.projectContent').width();
     var baseCreatorHeight = baseCreatorWidth * .67;
 
-    if (baseCreatorHeight > window.windowWidth * .9) {
-      baseCreatorHeight = window.windowWidth * .9;
+    if (baseCreatorHeight > window.windowHeight * .9) {
+      baseCreatorHeight = window.windowHeight * .9;
     }
 
     var baseCreatorCanvas = bc.createCanvas(baseCreatorWidth, baseCreatorHeight);
     baseCreatorCanvas.parent('base-creator-holder');
+
+    baseCreatorCanvas.mouseClicked(clickInteraction);
+    baseCreatorCanvas.mouseMoved(mouseMoveInteraction);
+    //TODO: touch stuff
 
     //gui = this.createGui();
 
@@ -82,7 +106,7 @@ var baseCreatorSketch = function( bc ) {
     }
 
     //textFont(guiFont);
-    bc.textFont('Arial'); // TODO: some google fonts stuff
+    bc.textFont('Arial'); // TODO: some google fonts stuff?
     axisLabelSize = bc.width/50;
     if (axisLabelSize < 12) {
       axisLabelSize = 12;
@@ -217,16 +241,14 @@ var baseCreatorSketch = function( bc ) {
             yPos: _yPos, 
             minVal: _minVal, 
             maxVal: _maxVal, 
-            currentVal: midVal + bc.random(-sliderRange / 4, sliderRange / 4) };
-    // TODO: random(range*.25 + minVal, range * .75 * minVal)?
+            currentVal: midVal + bc.random(-sliderRange / 4, sliderRange / 4) 
+    };
   }
 
   function createButton(_name, _xPos, _yPos) {
     return {name: _name, xPos: _xPos, yPos: _yPos};
   }
 
-  var sliderStart = sliderX + 83;
-  var sliderEnd = sliderX + sliderWidth - 5;
   function drawGui() {
     // Draw button/ slider rectangles
     bc.stroke(0);
@@ -239,13 +261,12 @@ var baseCreatorSketch = function( bc ) {
     // Label buttons/ sliders
     bc.noStroke();
     bc.fill(0);
-    var guiLabelSize = 15;
     bc.textSize(guiLabelSize);
     var textOffset = sliderHeight - (sliderHeight - guiLabelSize) / 2 - 2;
-    bc.text("Width:", sliderX + 3, xSliderY + textOffset);
-    bc.text("Height:", sliderX + 3, ySliderY + textOffset);
-    bc.text("Wiggliness:", sliderX + 3, wiggleSliderY + textOffset);
-    bc.text("Lock in shape", sliderX + 3, lockButton.yPos + textOffset);
+    bc.text("Width:", sliderX + guiTextPadding, xSliderY + textOffset);
+    bc.text("Height:", sliderX + guiTextPadding, ySliderY + textOffset);
+    bc.text("Wiggliness:", sliderX + guiTextPadding, wiggleSliderY + textOffset);
+    bc.text("Lock in shape", sliderX + guiTextPadding, lockButton.yPos + textOffset);
 
     // Draw the sliders
     bc.stroke(0);
@@ -254,27 +275,20 @@ var baseCreatorSketch = function( bc ) {
     bc.line(sliderStart, wiggleSlider.yPos + sliderHeight/2, sliderEnd, wiggleSlider.yPos + sliderHeight/2);
 
     bc.strokeWeight(3);
-    var sliderPadding = 5;
+
     var xSliderTickPos = bc.map(xSlider.currentVal, xSlider.minVal, xSlider.maxVal, sliderStart, sliderEnd);
-    bc.line(xSliderTickPos, xSliderY + sliderPadding, xSliderTickPos, xSliderY + sliderHeight - sliderPadding);
+    bc.line(xSliderTickPos, xSliderY + sliderTickPadding, xSliderTickPos, xSliderY + sliderHeight - sliderTickPadding);
     var ySliderTickPos = bc.map(ySlider.currentVal, ySlider.minVal, ySlider.maxVal, sliderStart, sliderEnd);
-    bc.line(ySliderTickPos, ySliderY + sliderPadding, ySliderTickPos, ySliderY + sliderHeight - sliderPadding);
+    bc.line(ySliderTickPos, ySliderY + sliderTickPadding, ySliderTickPos, ySliderY + sliderHeight - sliderTickPadding);
     var wiggleSliderTickPos = bc.map(wiggleSlider.currentVal, wiggleSlider.minVal, wiggleSlider.maxVal, sliderStart, sliderEnd);
-    bc.line(wiggleSliderTickPos, wiggleSliderY + sliderPadding, wiggleSliderTickPos, wiggleSliderY + sliderHeight - sliderPadding);
+    bc.line(wiggleSliderTickPos, wiggleSliderY + sliderTickPadding, wiggleSliderTickPos, wiggleSliderY + sliderHeight - sliderTickPadding);
 
     bc.strokeWeight(1);
   }
 
-  bc.mouseDragged = () => {
-    sliders();
-  }
 
-  bc.mouseClicked = () => {
-    sliders();
-    buttons();
-  }
 
-  function sliders() {
+  function baseSliders() {
     if (bc.mouseX >= sliderStart && bc.mouseX <= sliderEnd) {
 
       // xSlider
@@ -294,17 +308,20 @@ var baseCreatorSketch = function( bc ) {
     }
   }
 
-  function buttons() {
+  function baseButtons() {
     if (bc.mouseX >= sliderX && bc.mouseX <= sliderX + sliderWidth) {
       if (bc.mouseY >= lockButton.yPos && bc.mouseY <= lockButton.yPos + sliderHeight) {
         baseUnlockedFlag = false;
         window.basePoints = points;
         window.scaleFactor = scaleFactor;
+        //window.xRadius = xSlider.currentVal;
+        //window.yRadius = ySlider.currentVal;
+        window.roughBaseArea = xSlider.currentVal * ySlider.currentVal * bc.PI;
       }
     }
   }
 
-  //TODO: touch stuff
+  
 
 };
 

@@ -4,22 +4,40 @@ var flockSketch = function ( f ) {
   var scaledRodDiameter;
   var rods = [];
 
+  var numRodsSlider;
+
   var maxSpeed = .3;
   var maxForce = 0.03;
 
   f.preload = () => {
   }
 
+  function clickInteraction() {
+    flockSliders();
+    //baseButtons();
+  }
+
+  function mouseMoveInteraction() {
+    if (f.mouseIsPressed) {
+      flockSliders();
+    }
+  }
+
   f.setup = () => {
     var flockWidth = $('.projectContent').width();
     var flockHeight = flockWidth * .67;
 
-    //if (flockHeight > f.windowWidth * .9) {
-    //  flockHeight = f.windowWidth * .9;
-    //}
+    if (flockHeight > window.windowHeight * .9) {
+      flockHeight = window.windowHeight * .9;
+    }
 
     var flockCanvas = f.createCanvas(flockWidth, flockHeight);
     flockCanvas.parent('flock-holder');
+
+    //flockCanvas.m
+    flockCanvas.mouseClicked(clickInteraction);
+    flockCanvas.mouseMoved(mouseMoveInteraction);
+    //TODO: touch stuff
   }
 
   f.draw = () => {
@@ -32,6 +50,7 @@ var flockSketch = function ( f ) {
       for (var i = 0; i < 10; i++) {
         rods[i] = createRod();
       }
+      generateRods(numRodsSlider.currentVal);
     }
     else {
       //f.background(f.random(255));
@@ -39,6 +58,14 @@ var flockSketch = function ( f ) {
       drawBase();
       updateRods();
       drawRods();
+      drawGui();
+    }
+  }
+
+  function generateRods(numRods) {
+    rods = [];
+    for (var i = 0; i < numRods; i++) {
+      rods[i] = createRod();
     }
   }
 
@@ -202,6 +229,8 @@ var flockSketch = function ( f ) {
 
   function drawRods() {
     f.push();
+    f.stroke(0);
+    f.strokeWeight(1);
     f.fill(steelColor);
     f.translate(f.width/2, f.height/2);
     for (var i = 0; i < rods.length; i++) {
@@ -221,6 +250,8 @@ var flockSketch = function ( f ) {
   function loadBase() {
     loadedBaseFlag = true;
     scaledRodDiameter = unscaledRodDiameter * 2 * scaleFactor;
+    var maxRods = Math.floor(roughBaseArea / 69);
+    numRodsSlider = createSlider("# of elements:", guiMargins, guiMargins, 3, maxRods);
   }
 
   function drawBase() {
@@ -228,6 +259,7 @@ var flockSketch = function ( f ) {
     f.translate(f.width/2, f.height/2);
     f.fill(200);
     f.stroke(0);
+    f.strokeWeight(1);
     f.beginShape();
     for (var i = 0; i < basePoints.length; i++) {
       f.curveVertex(basePoints[i].x, basePoints[i].y);
@@ -239,6 +271,71 @@ var flockSketch = function ( f ) {
     //}  
 
     f.pop();
+  }
+
+  function createSlider(_name, _xPos, _yPos, _minVal, _maxVal) {
+    var sliderRange = _maxVal - _minVal;
+    var midVal = (_maxVal + _minVal)/2;
+    //return {name: _name, xPos: _xPos, yPos: _yPos, minVal: _minVal, maxVal: _maxVal, currentVal: (_maxVal + _minVal)/2 };
+    return {name: _name, 
+            xPos: _xPos, 
+            yPos: _yPos, 
+            minVal: _minVal, 
+            maxVal: _maxVal, 
+            currentVal: Math.floor(midVal) + Math.round(f.random(-sliderRange / 4, sliderRange / 4)) 
+    };
+  }
+
+  function createButton(_name, _xPos, _yPos) {
+    return {name: _name, xPos: _xPos, yPos: _yPos};
+  }
+
+  function drawGui() {
+    // Draw button/ slider rectangles
+    f.stroke(0);
+    f.strokeWeight(1);
+    f.fill(steelColor);
+    f.rect(numRodsSlider.xPos, numRodsSlider.yPos, sliderWidth, sliderHeight);
+
+    // Label buttons/ sliders
+    f.noStroke();
+    f.fill(0);
+    f.textSize(guiLabelSize);
+    var textOffset = sliderHeight - (sliderHeight - guiLabelSize) / 2 - 2;
+    f.text("# of elements:", numRodsSlider.xPos + guiTextPadding + 1, numRodsSlider.yPos + textOffset);
+  
+    // Draw the sliders
+    f.stroke(0);
+    f.line(sliderStart, numRodsSlider.yPos + sliderHeight/2, sliderEnd, numRodsSlider.yPos + sliderHeight/2);
+  
+    f.strokeWeight(3);
+    var numRodsSliderTickPos = f.map(numRodsSlider.currentVal, numRodsSlider.minVal, numRodsSlider.maxVal, sliderStart, sliderEnd);
+    //console.log(numRodsSlider.currentVal + ", " + numRodsSliderTickPos);
+    f.line(numRodsSliderTickPos, numRodsSlider.yPos + sliderTickPadding, 
+           numRodsSliderTickPos, numRodsSlider.yPos + sliderHeight - sliderTickPadding);
+
+  }
+/*
+  f.mouseDragged = () => {
+    flockSliders();
+  }
+
+  f.mouseClicked = () => {
+    flockSliders();
+  }
+*/
+
+  
+
+  function flockSliders() {
+    if (f.mouseX >= sliderStart && f.mouseX <= sliderEnd) {
+
+      // numRodsSlider
+      if (f.mouseY >= numRodsSlider.yPos && f.mouseY <= numRodsSlider.yPos + sliderHeight) {
+        numRodsSlider.currentVal = Math.round(f.map(f.mouseX, sliderStart, sliderEnd, numRodsSlider.minVal, numRodsSlider.maxVal));
+        generateRods(numRodsSlider.currentVal);
+      }
+    }
   }
 };
 
