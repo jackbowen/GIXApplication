@@ -10,6 +10,11 @@ var sliderStart = guiMargins + 100;
 var sliderEnd = guiMargins + sliderWidth - 5;
 var sliderTickPadding = 5;
 
+var holdTextBoxWidth = 350;
+var holdTextBoxHeight = 200;
+var holdTextBoxTextSize = 20;
+
+
 var baseCreatorSketch = function( bc ) {
   //window.bcp5 = new p5();
   //new p5();
@@ -76,22 +81,14 @@ var baseCreatorSketch = function( bc ) {
     baseCreatorCanvas.mouseClicked(clickInteraction);
     baseCreatorCanvas.mouseMoved(mouseMoveInteraction);
     //TODO: touch stuff
+    //TODO: make lock button a darker grey whem mouse is pressed
 
-    //gui = this.createGui();
-
-    //var sliderWidth = 128;
-    //var sliderHeight = 32;
-    //xSlider = this.createSlider("width", sliderX, xSliderY, sliderWidth, sliderHeight, 6, 40);
-    //ySlider = this.createSlider("height", sliderX, ySliderY, sliderWidth, sliderHeight, 6, 30);
-    //wiggleSlider = this.createSlider("wiggle", sliderX, wiggleSliderY, sliderWidth, sliderHeight, sqrt(1000), sqrt(5)); 
     xSlider = createSlider("width", sliderX, xSliderY, 6, 40);
     ySlider = createSlider("height", sliderX, ySliderY, 6, 30);
     wiggleSlider = createSlider("wiggle", sliderX, wiggleSliderY, bc.sqrt(1000), bc.sqrt(5)); 
     lockButton = createButton("lockBase", sliderX, lockButtonY);
 
     var scaleMargin = .9;
-    //var xScale = (width / (2*xSlider.max)) * scaleMargin;
-    //var yScale = (height / (2*ySlider.max)) * scaleMargin;
     var xScale = (bc.width / (2*xSlider.maxVal)) * scaleMargin;
     var yScale = (bc.height / (2*ySlider.maxVal)) * scaleMargin;
 
@@ -106,7 +103,7 @@ var baseCreatorSketch = function( bc ) {
     }
 
     //textFont(guiFont);
-    bc.textFont('Arial'); // TODO: some google fonts stuff?
+    bc.textFont('Roboto'); // TODO: some google fonts stuff?
     axisLabelSize = bc.width/50;
     if (axisLabelSize < 12) {
       axisLabelSize = 12;
@@ -225,10 +222,7 @@ var baseCreatorSketch = function( bc ) {
       drawGui();
     }
     else {
-      var textBoxWidth = bc.width / 3;
-      var textBoxHeight = 300;
-      bc.fill(255);
-      bc.rect(bc.width/2 - textBoxWidth/2, bc.height/2 - textBoxHeight/2, textBoxWidth, textBoxHeight);
+
     }
   }
 
@@ -317,6 +311,17 @@ var baseCreatorSketch = function( bc ) {
         //window.xRadius = xSlider.currentVal;
         //window.yRadius = ySlider.currentVal;
         window.roughBaseArea = xSlider.currentVal * ySlider.currentVal * bc.PI;
+
+        //Grey out sketch, inform user to move to next part 
+        bc.fill(255);
+        bc.stroke(0);
+        bc.rect(bc.width/2 - holdTextBoxWidth/2, bc.height/2 - holdTextBoxHeight/2, 
+                holdTextBoxWidth, holdTextBoxHeight);
+        bc.fill(0);
+        bc.noStroke();
+        bc.textSize(holdTextBoxTextSize);
+        bc.textAlign(bc.CENTER);
+        bc.text("Base shape locked in.\nProceed to the next sketch.", bc.width/2, bc.height/2 - holdTextBoxTextSize * .7);
       }
     }
   }

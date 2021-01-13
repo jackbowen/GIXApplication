@@ -38,18 +38,38 @@ var flockSketch = function ( f ) {
     flockCanvas.mouseClicked(clickInteraction);
     flockCanvas.mouseMoved(mouseMoveInteraction);
     //TODO: touch stuff
+
+    //textFont(guiFont);
+    f.textFont('Roboto'); 
+    /*axisLabelSize = f.width/50;
+    if (axisLabelSize < 12) {
+      axisLabelSize = 12;
+    }
+    f.textSize(axisLabelSize);*/
+  }
+
+  function drawWaitBox() {
+    f.background(bgColor);
+
+    f.fill(255);
+    f.stroke(0);
+    f.rect(f.width/2 - holdTextBoxWidth/2, f.height/2 - holdTextBoxHeight/2, holdTextBoxWidth, holdTextBoxHeight);
+    f.fill(0);
+    f.noStroke();
+    f.textSize(holdTextBoxTextSize);
+    f.textAlign(f.CENTER);
+    f.text("Waiting to determine base shape.\nPlease see first sketch.", f.width/2, f.height/2 - holdTextBoxTextSize * .7);
   }
 
   f.draw = () => {
     if (baseUnlockedFlag) {
-      f.background(bgColor);
-      f.text("waiting on base sketch", f.width/2, f.height/2);
+      drawWaitBox();
     }
     else if (!loadedBaseFlag) {
       loadBase();
-      for (var i = 0; i < 10; i++) {
-        rods[i] = createRod();
-      }
+//      for (var i = 0; i < 10; i++) {
+//        rods[i] = createRod();
+//      }
       generateRods(numRodsSlider.currentVal);
     }
     else {
@@ -301,6 +321,7 @@ var flockSketch = function ( f ) {
     f.noStroke();
     f.fill(0);
     f.textSize(guiLabelSize);
+    f.textAlign(f.LEFT);
     var textOffset = sliderHeight - (sliderHeight - guiLabelSize) / 2 - 2;
     f.text("# of elements:", numRodsSlider.xPos + guiTextPadding + 1, numRodsSlider.yPos + textOffset);
   
