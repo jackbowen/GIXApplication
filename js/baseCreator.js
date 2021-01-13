@@ -1,3 +1,6 @@
+var bgColor = '#FF7C7B';
+var steelColor = '#B4D0DE'; 
+
 var baseCreatorSketch = function( bc ) {
   //window.bcp5 = new p5();
   //new p5();
@@ -25,8 +28,8 @@ var baseCreatorSketch = function( bc ) {
   var noiseY = 0.0;
   var noiseYInc = .002; // How quickly does the shape change
 
-  var bgColor = '#FF7C7B';
-  var steelColor = '#B4D0DE';
+  //var bgColor = '#FF7C7B';
+  //var steelColor = '#B4D0DE';
 
   var scaleFactor = 20;
   var axisToOffset;

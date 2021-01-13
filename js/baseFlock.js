@@ -4,7 +4,7 @@ var flockSketch = function ( f ) {
   var scaledRodDiameter;
   var rods = [];
 
-  var maxSpeed = .5;
+  var maxSpeed = .3;
   var maxForce = 0.03;
 
   f.preload = () => {
@@ -24,7 +24,7 @@ var flockSketch = function ( f ) {
 
   f.draw = () => {
     if (baseUnlockedFlag) {
-      f.background(255, 125, 0);
+      f.background(bgColor);
       f.text("waiting on base sketch", f.width/2, f.height/2);
     }
     else if (!loadedBaseFlag) {
@@ -35,20 +35,24 @@ var flockSketch = function ( f ) {
     }
     else {
       //f.background(f.random(255));
-      f.background(0, 0, 255);
+      f.background(bgColor);
       drawBase();
       updateRods();
       drawRods();
     }
   }
 
-  rodNoise = 0;
-  rodNoiseInc = .1;
-  rodSpeed = 1;
+  //rodNoise = 0;
+  var rodNoiseInc = .01;
+  //rodSpeed = 1;
   function updateRods() {
     for (var i = 0; i < rods.length; i++) {
       var tempRod = rods[i];
-      //wander(tempRod);
+      
+      var wan = wander(tempRod);
+      wan.mult(.2); // The wander part of things was just being a little pushy
+      tempRod.acc.add(wan);
+      
       var edge = avoidEdge(tempRod);
       tempRod.acc.add(edge);
       
@@ -64,11 +68,31 @@ var flockSketch = function ( f ) {
   }
 
   function wander(rod) {
-          // Add random wander
-      //rod.x += rodSpeed * (f.noise(rodNoise)-.5);
-      //rod.y += rodSpeed * (f.noise(rodNoise+20)-.5);
-      //var wander = f.createVector()
-      //rodNoise += rodNoiseInc;
+    // Add random wander
+    //rod.x += rodSpeed * (f.noise(rodNoise)-.5);
+    //rod.y += rodSpeed * (f.noise(rodNoise+20)-.5);
+    //var wander = f.createVector()
+    //rodNoise += rodNoiseInc;
+    var steer = f.createVector(f.noise(rod.wanderNoise)-.49, f.noise(rod.wanderNoise+20)-.49);
+    rod.wanderNoise += rodNoiseInc;
+
+    f.push();
+    f.translate(f.width/2, f.height/2);
+    steer.normalize();
+    steer.mult(scaleFactor);
+    f.strokeWeight(3);
+    f.stroke(255, 0, 0);
+    f.line(rod.loc.x, rod.loc.y, rod.loc.x + steer.x, rod.loc.y + steer.y);
+    f.pop();
+
+    if (steer.mag() > 0) {
+      // Implement Reynolds: Steering = Desired - Velocity
+      steer.normalize();
+      steer.mult(maxSpeed);
+      steer.sub(rod.vel);
+      steer.limit(maxForce);
+    }
+    return steer;
   }
 
   // Avoid shape edge 
@@ -92,23 +116,6 @@ var flockSketch = function ( f ) {
     var p2 = {x: basePoints[closestEdge[1]].x, y: basePoints[closestEdge[1]].y}
     var distToLine = distanceToLine(rod.loc.x, rod.loc.y, p1.x, p1.y, p2.x, p2.y);
 
-
-    // DEBUGGING
-    f.push();
-    f.translate(f.width/2, f.height/2);
-    //console.log(closestEdge);
-    f.strokeWeight(3);
-    f.stroke(255, 0, 0);
-    if (distToLine < 50) {
-      f.stroke(0, 255, 0);
-      var normalVector = f.createVector(p1.y - p2.y, -(p1.x - p2.x));
-      f.line(rod.loc.x, rod.loc.y, rod.loc.x + normalVector.x, rod.loc.y + normalVector.y);
-    }
-    f.line(p1.x, p1.y, p2.x, p2.y);
-    f.strokeWeight(1);
-    f.stroke(0);
-    f.pop();
-
     var steer = f.createVector(0, 0);
     var desiredMargin = scaleFactor * 4;
     if (distToLine < desiredMargin) {
@@ -118,11 +125,24 @@ var flockSketch = function ( f ) {
       steer.add(diff);
     }
 
-     if (steer.mag() > 0) {
-      // First two lines of code below could be condensed with new PVector setMag() method
-      // Not using this method until Processing.js catches up
-      // steer.setMag(maxspeed);
+    // Show it
+    if (distToLine < desiredMargin) {
+      f.push();
+      f.translate(f.width/2, f.height/2);
+      //console.log(closestEdge);
+      f.strokeWeight(3);
+      f.stroke(0, 255, 0);
+      var normalVector = f.createVector(p1.y - p2.y, -(p1.x - p2.x));
+      f.line(rod.loc.x, rod.loc.y, rod.loc.x + normalVector.x, rod.loc.y + normalVector.y);
+      f.line(p1.x, p1.y, p2.x, p2.y);
+      f.strokeWeight(1);
+      f.stroke(0);
+      f.pop();
+    }
 
+
+
+    if (steer.mag() > 0) {
       // Implement Reynolds: Steering = Desired - Velocity
       steer.normalize();
       steer.mult(maxSpeed);
@@ -133,10 +153,16 @@ var flockSketch = function ( f ) {
   }
 
   function separate(rod) {
-    var desiredSeparation = scaleFactor * 3;
+    // Minimum distance between two rods should be 2" - that's scaleFactor * 2 * 2
+    // Increase that number a bit just to give us some room;
+    var desiredSeparation = scaleFactor * 5;
     var steer = f.createVector(0, 0);
     var count = 0;
 
+    f.push();
+    f.translate(f.width/2, f.height/2);
+    f.strokeWeight(1);
+    f.stroke(0, 0, 255);
     // For every rod in the system, check if it's too close
     for (var i = 0; i < rods.length; i++) {
       var other = rods[i]
@@ -144,6 +170,7 @@ var flockSketch = function ( f ) {
       // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
       if ((d > 0) && (d < desiredSeparation)) {
         // Calculate vector pointing away from neighbor
+        f.line(rod.loc.x, rod.loc.y, other.loc.x, other.loc.y);
         var diff = p5.Vector.sub(rod.loc, other.loc);
         diff.normalize();
         diff.div(d);        // Weight by distance
@@ -151,6 +178,7 @@ var flockSketch = function ( f ) {
         count++;            // Keep track of how many
       }
     }
+    f.pop();
     // Average -- divide by how many
     if (count > 0) {
       steer.div(count);
@@ -158,10 +186,6 @@ var flockSketch = function ( f ) {
 
     // As long as the vector is greater than 0
     if (steer.mag() > 0) {
-      // First two lines of code below could be condensed with new PVector setMag() method
-      // Not using this method until Processing.js catches up
-      // steer.setMag(maxspeed);
-
       // Implement Reynolds: Steering = Desired - Velocity
       steer.normalize();
       steer.mult(maxSpeed);
@@ -178,6 +202,7 @@ var flockSketch = function ( f ) {
 
   function drawRods() {
     f.push();
+    f.fill(steelColor);
     f.translate(f.width/2, f.height/2);
     for (var i = 0; i < rods.length; i++) {
       var tempRod = rods[i];
@@ -189,7 +214,8 @@ var flockSketch = function ( f ) {
   function createRod() {
     return {loc: f.createVector(f.random(-10, 10), f.random(-10, 10)), 
             vel: f.createVector(f.random(-.2,.2), f.random(-.2,.2)),
-            acc: f.createVector(0, 0)};
+            acc: f.createVector(0, 0),
+            wanderNoise: f.random(100)};
   }
 
   function loadBase() {
@@ -208,9 +234,9 @@ var flockSketch = function ( f ) {
     }  
     f.endShape();
 
-    for (var i = 0; i < basePoints.length - 1; i++) {
-      f.line(basePoints[i].x, basePoints[i].y, basePoints[i+1].x, basePoints[i+1].y);
-    }  
+    //for (var i = 0; i < basePoints.length - 1; i++) {
+    //  f.line(basePoints[i].x, basePoints[i].y, basePoints[i+1].x, basePoints[i+1].y);
+    //}  
 
     f.pop();
   }
