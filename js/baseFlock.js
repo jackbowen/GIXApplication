@@ -1,12 +1,14 @@
+var rods = [];
+var scaledRodDiameter;
+
 var flockSketch = function ( f ) {
   var loadedBaseFlag = false;
   var unscaledRodDiameter = .375;
-  var scaledRodDiameter;
-  var rods = [];
+  
 
   var numRodsSlider;
 
-  var maxSpeed = .3;
+  var maxSpeed = .15;
   var maxForce = 0.03;
 
   f.preload = () => {
@@ -120,7 +122,7 @@ var flockSketch = function ( f ) {
     //rod.y += rodSpeed * (f.noise(rodNoise+20)-.5);
     //var wander = f.createVector()
     //rodNoise += rodNoiseInc;
-    var steer = f.createVector(f.noise(rod.wanderNoise)-.49, f.noise(rod.wanderNoise+20)-.49);
+    var steer = f.createVector(f.noise(rod.wanderNoise)-.48, f.noise(rod.wanderNoise+20)-.48);
     rod.wanderNoise += rodNoiseInc;
 
     f.push();
@@ -269,15 +271,18 @@ var flockSketch = function ( f ) {
 
   function loadBase() {
     loadedBaseFlag = true;
-    scaledRodDiameter = unscaledRodDiameter * 2 * scaleFactor;
-    var maxRods = Math.floor(roughBaseArea / 69);
+    scaledRodDiameter = Math.round(unscaledRodDiameter * 2 * scaleFactor);
+    if (scaledRodDiameter % 2 != 0) {
+      scaledRodDiameter += 1;
+    }
+    var maxRods = Math.floor(roughBaseArea / 55);
     numRodsSlider = createSlider("# of elements:", guiMargins, guiMargins, 3, maxRods);
   }
 
   function drawBase() {
     f.push();
     f.translate(f.width/2, f.height/2);
-    f.fill(200);
+    f.fill(steelColor);
     f.stroke(0);
     f.strokeWeight(1);
     f.beginShape();
