@@ -28,6 +28,7 @@ function calcMapSpacer() {
 // TODO: tidy up global vars
 var bounds; 
 var stopsMap;
+var currentImg;
 
 function startMap() {
   var mapElementWidth = $('#map').width();
@@ -36,7 +37,8 @@ function startMap() {
   });
   bounds = [[0,0], [mapElementWidth, mapElementWidth]];
   
-  var image = L.imageOverlay('../resources/map_tiles/2011.jpg', bounds).addTo(stopsMap);
+  currentImg = L.imageOverlay('../resources/map_tiles/2011.jpg', bounds);
+  currentImg.addTo(stopsMap);
   stopsMap.fitBounds(bounds); //Sets a map view that contains the given geographical bounds with the maximum zoom level possible.
   stopsMap.setMaxBounds(bounds);
   stopsMap.setMaxZoom(Math.floor(6-mapElementWidth/750));
@@ -63,15 +65,18 @@ function startMap() {
 function selectYear(year) {
   // Unload old map so as not to crash it
   $('#' + currentYear).removeClass('active');
-  if (stopsMap.hasLayer('../resources/map_tiles/' + currentYear + '.jpg')) {
-    stopsMap.removeLayer('../resources/map_tiles/' + currentYear + '.jpg')
-  }
+  var oldRef = '../resources/map_tiles/' + currentYear + '.jpg';
+  if (stopsMap.hasLayer(currentImg)) {
+    console.log("Removing " + currentYear);
+    stopsMap.removeLayer(currentImg);
+  } 
 
-  // Highlight active year on UI
-  $('#' + year).addClass('active');
   currentYear = year;
-  // Possible TODO: load these in the background for faster swapping between them
-  var image = L.imageOverlay('../resources/map_tiles/' + currentYear + '.jpg', bounds).addTo(stopsMap);
+  
+  // Highlight active year on UI
+  $('#' + currentYear).addClass('active');
+  currentImg = L.imageOverlay('../resources/map_tiles/' + currentYear + '.jpg', bounds);
+  currentImg.addTo(stopsMap);
 }
 
 function initMap() {

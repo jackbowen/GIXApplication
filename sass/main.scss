@@ -9,11 +9,13 @@
 // COLORS //
 ////////////
 $project-title-color : #0000ff;
-$text-color: #3D4F39;
+//$text-color: #3D4F39;
 $caption-color: #555;
-$bg-color: #E8D2BE; //start color: #75C0DE        //start color: #E8D2BE
+//$bg-color: #E8D2BE; //start color: #75C0DE        //start color: #E8D2BE
                     //end color: #FFC0DE          //end color: #96D2BE
 $active-color: #0000ff;
+$bg-color: #F9F7FF;
+$text-color: #38353B;
 //------------------------------------------------------------------------------
 
 
@@ -98,11 +100,17 @@ body {
 
   .imageCaption {
     color: $caption-color;
+    margin-bottom: 1.5em;
   }
 
   .projectDescription {
     font-size: 1.5em;
     margin-top: .8em;
+    margin-bottom: .8em;
+  }
+
+  .lastParagraph {
+    margin-bottom: 3em;
   }
 
   sup {
@@ -138,8 +146,8 @@ body {
     height: 90vmin;
 
     //TODO: min and max width
-    background-color: red;
-    //background-color: $bg-color;
+    background-image: url("../resources/mapBackground.jpg");
+    background-repeat: repeat;
     // TODO: min width 
   }
 
