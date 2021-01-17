@@ -222,7 +222,6 @@ var baseCreatorSketch = function( bc ) {
       drawGui();
     }
     else {
-
     }
   }
 
@@ -256,6 +255,7 @@ var baseCreatorSketch = function( bc ) {
     bc.noStroke();
     bc.fill(0);
     bc.textSize(guiLabelSize);
+    bc.textAlign(bc.LEFT);
     var textOffset = sliderHeight - (sliderHeight - guiLabelSize) / 2 - 2;
     bc.text("Width:", sliderX + guiTextPadding, xSliderY + textOffset);
     bc.text("Height:", sliderX + guiTextPadding, ySliderY + textOffset);
@@ -283,7 +283,7 @@ var baseCreatorSketch = function( bc ) {
 
 
   function baseSliders() {
-    if (bc.mouseX >= sliderStart && bc.mouseX <= sliderEnd) {
+    if (bc.mouseX >= sliderStart && bc.mouseX <= sliderEnd && baseUnlockedFlag) {
 
       // xSlider
       if (bc.mouseY >= xSlider.yPos && bc.mouseY <= xSlider.yPos + sliderHeight) {
@@ -303,29 +303,55 @@ var baseCreatorSketch = function( bc ) {
   }
 
   function baseButtons() {
-    if (bc.mouseX >= sliderX && bc.mouseX <= sliderX + sliderWidth) {
+    if (bc.mouseX >= sliderX && bc.mouseX <= sliderX + sliderWidth && baseUnlockedFlag) {
       if (bc.mouseY >= lockButton.yPos && bc.mouseY <= lockButton.yPos + sliderHeight) {
         baseUnlockedFlag = false;
         window.basePoints = points;
         window.scaleFactor = scaleFactor;
         //window.xRadius = xSlider.currentVal;
         //window.yRadius = ySlider.currentVal;
+        window.largerRadius = xSlider.currentVal > ySlider.currentVal ? xSlider.currentVal * scaleFactor : ySlider.currentVal * scaleFactor;
         window.roughBaseArea = xSlider.currentVal * ySlider.currentVal * bc.PI;
 
-        //Grey out sketch, inform user to move to next part 
-        bc.fill(255);
-        bc.stroke(0);
-        bc.rect(bc.width/2 - holdTextBoxWidth/2, bc.height/2 - holdTextBoxHeight/2, 
-                holdTextBoxWidth, holdTextBoxHeight);
-        bc.fill(0);
-        bc.noStroke();
-        bc.textSize(holdTextBoxTextSize);
-        bc.textAlign(bc.CENTER);
-        bc.text("Base shape locked in.\nProceed to the next sketch.", bc.width/2, bc.height/2 - holdTextBoxTextSize * .7);
+        drawFinalBox();
+      }
+    }
+    else if (!baseUnlockedFlag) {
+      var unlockTopLeft = {x: bc.width/2 - sliderWidth/2, y: bc.height/2 + holdTextBoxHeight * .15};
+      if (bc.mouseX >= unlockTopLeft.x && bc.mouseX <= unlockTopLeft.x + sliderWidth &&
+          bc.mouseY >= unlockTopLeft.y && bc.mouseY <= unlockTopLeft.y + sliderHeight) {
+        //console.log("creamy");
+        baseUnlockedFlag = true;
+        purchasedFlag = false;
       }
     }
   }
 
+  function drawFinalBox() {
+    // Grey out sketch, 
+    bc.fill(0, 40);
+    bc.rect(0, 0, bc.width, bc.height);
+
+    // Draw bounding box as well as button
+    bc.fill(255);
+    bc.stroke(0);
+    bc.rect(bc.width/2 - holdTextBoxWidth/2, bc.height/2 - holdTextBoxHeight/2, 
+            holdTextBoxWidth, holdTextBoxHeight);
+    var editBoxY = bc.height/2 + holdTextBoxHeight * .15;
+    bc.rect(bc.width/2 - sliderWidth/2, editBoxY, sliderWidth, sliderHeight);   
+
+    // Write text informing them to move on
+    bc.fill(0);
+    bc.noStroke();
+    bc.textSize(holdTextBoxTextSize);
+    bc.textAlign(bc.CENTER);
+    bc.text("Base shape locked in.\nProceed to the next sketch.", bc.width/2, bc.height/2 - holdTextBoxTextSize * .7);
+
+    // Provide option to edit shape
+    bc.textSize(guiLabelSize);
+    var textOffset = sliderHeight - (sliderHeight - guiLabelSize) / 2 - 2;
+    bc.text("Edit base shape", bc.width/2, editBoxY + textOffset);    
+  }
   
 
 };

@@ -61,7 +61,7 @@ function startMap() {
 }
 
 function selectYear(year) {
-  
+  // Unload old map so as not to crash it
   $('#' + currentYear).removeClass('active');
   if (stopsMap.hasLayer('../resources/map_tiles/' + currentYear + '.jpg')) {
     stopsMap.removeLayer('../resources/map_tiles/' + currentYear + '.jpg')

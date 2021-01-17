@@ -36,18 +36,12 @@ var flockSketch = function ( f ) {
     var flockCanvas = f.createCanvas(flockWidth, flockHeight);
     flockCanvas.parent('flock-holder');
 
-    //flockCanvas.m
     flockCanvas.mouseClicked(clickInteraction);
     flockCanvas.mouseMoved(mouseMoveInteraction);
     //TODO: touch stuff
 
     //textFont(guiFont);
     f.textFont('Roboto'); 
-    /*axisLabelSize = f.width/50;
-    if (axisLabelSize < 12) {
-      axisLabelSize = 12;
-    }
-    f.textSize(axisLabelSize);*/
   }
 
   function drawWaitBox() {
@@ -55,7 +49,9 @@ var flockSketch = function ( f ) {
 
     f.fill(255);
     f.stroke(0);
+    f.strokeWeight(1);
     f.rect(f.width/2 - holdTextBoxWidth/2, f.height/2 - holdTextBoxHeight/2, holdTextBoxWidth, holdTextBoxHeight);
+
     f.fill(0);
     f.noStroke();
     f.textSize(holdTextBoxTextSize);
@@ -63,24 +59,32 @@ var flockSketch = function ( f ) {
     f.text("Waiting to determine base shape.\nPlease see first sketch.", f.width/2, f.height/2 - holdTextBoxTextSize * .7);
   }
 
+  var darkenedBackgroundFlag = false;
   f.draw = () => {
     if (baseUnlockedFlag) {
+      f.background(bgColor);
       drawWaitBox();
+      loadedBaseFlag = false;
     }
     else if (!loadedBaseFlag) {
       loadBase();
-//      for (var i = 0; i < 10; i++) {
-//        rods[i] = createRod();
-//      }
       generateRods(numRodsSlider.currentVal);
     }
-    else {
+    else if (!purchasedFlag) {
       //f.background(f.random(255));
       f.background(bgColor);
       drawBase();
       updateRods();
       drawRods();
       drawGui();
+      darkenedBackgroundFlag = false;
+    }
+    else if (!darkenedBackgroundFlag) {
+      f.fill(0, 40);
+      f.noStroke();
+      f.rect(0, 0, f.width, f.height);
+      //TODO: textbox?
+      darkenedBackgroundFlag = true;
     }
   }
 
@@ -263,37 +267,37 @@ var flockSketch = function ( f ) {
   }
 
   function createRod() {
-    return {loc: f.createVector(f.random(-10, 10), f.random(-10, 10)), 
+    return {loc: f.createVector(f.random(-40, 40), f.random(-40, 40)), 
             vel: f.createVector(f.random(-.2,.2), f.random(-.2,.2)),
             acc: f.createVector(0, 0),
-            wanderNoise: f.random(100)};
+            wanderNoise: f.random(100),
+            heightNoiseSeed: f.random(50)};
   }
 
   function loadBase() {
-    loadedBaseFlag = true;
     scaledRodDiameter = Math.round(unscaledRodDiameter * 2 * scaleFactor);
     if (scaledRodDiameter % 2 != 0) {
       scaledRodDiameter += 1;
     }
     var maxRods = Math.floor(roughBaseArea / 55);
     numRodsSlider = createSlider("# of elements:", guiMargins, guiMargins, 3, maxRods);
+
+    loadedBaseFlag = true;
   }
 
   function drawBase() {
     f.push();
     f.translate(f.width/2, f.height/2);
+
     f.fill(steelColor);
     f.stroke(0);
     f.strokeWeight(1);
+
     f.beginShape();
     for (var i = 0; i < basePoints.length; i++) {
       f.curveVertex(basePoints[i].x, basePoints[i].y);
     }  
     f.endShape();
-
-    //for (var i = 0; i < basePoints.length - 1; i++) {
-    //  f.line(basePoints[i].x, basePoints[i].y, basePoints[i+1].x, basePoints[i+1].y);
-    //}  
 
     f.pop();
   }
@@ -341,15 +345,7 @@ var flockSketch = function ( f ) {
            numRodsSliderTickPos, numRodsSlider.yPos + sliderHeight - sliderTickPadding);
 
   }
-/*
-  f.mouseDragged = () => {
-    flockSliders();
-  }
 
-  f.mouseClicked = () => {
-    flockSliders();
-  }
-*/
 
   
 
