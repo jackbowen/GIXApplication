@@ -60,6 +60,7 @@ function startMap() {
   selectYear(2011);
 
   calcMapSpacer();
+  styleYearSelector();
 }
 
 function selectYear(year) {
@@ -89,9 +90,37 @@ function initMap() {
 };
 
 $(window).resize(function() {
-  //TODO: update map bounds on window resize
+  fitMap();
+  styleYearSelector();
   calcMapSpacer();
 });
+
+$(window).bind('resizeEnd', function() {
+  selectYear(currentYear);
+});
+
+function fitMap() {
+  var mapElementWidth = $('#map').width();
+  bounds = [[0,0], [mapElementWidth, mapElementWidth]];
+  stopsMap.fitBounds(bounds); //Sets a map view that contains the given geographical bounds with the maximum zoom level possible.
+  stopsMap.setMaxBounds(bounds);
+  
+  if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+      $(this).trigger('resizeEnd');
+  }, 500);
+}
+
+function styleYearSelector() {
+  if ($('.projectContent').width() < 562) {
+    $('li').css('width', '19%');
+    $('li.possiblyLast').css('border-right', 'none');
+  }
+  else {
+    $('li').css('width', '9.65%');
+    $('li.possiblyLast').css('border-right', '2px solid #38353B');
+  }
+}
 
 function updateMapColor(newColor) {
   $('body').css('background-color', newColor);

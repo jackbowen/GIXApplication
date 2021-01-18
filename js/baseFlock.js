@@ -56,7 +56,7 @@ var flockSketch = function ( f ) {
     f.noStroke();
     f.textSize(holdTextBoxTextSize);
     f.textAlign(f.CENTER);
-    f.text("Waiting to determine base shape.\nPlease see first sketch.", f.width/2, f.height/2 - holdTextBoxTextSize * .7);
+    f.text("Waiting to determine base shape.\nSelect 'Lock in shape' in first sketch.", f.width/2, f.height/2 - holdTextBoxTextSize * .7);
   }
 
   var darkenedBackgroundFlag = false;

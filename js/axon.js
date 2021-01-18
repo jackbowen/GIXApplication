@@ -54,7 +54,7 @@ var axonSketch = function ( a ) {
       a.noStroke();
       a.textSize(holdTextBoxTextSize);
       a.textAlign(a.CENTER);
-      a.text("Waiting to determine base shape.\nPlease see first sketch.", a.width/2, a.height/2 - holdTextBoxTextSize * .7);
+      a.text("Waiting to determine base shape.\nSelect 'Lock in shape' in first sketch.", a.width/2, a.height/2 - holdTextBoxTextSize * .7);
 
       loadedBaseFlag = false;
     }
