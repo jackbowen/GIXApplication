@@ -33,7 +33,7 @@ var axonSketch = function ( a ) {
     var axonCanvas = a.createCanvas(flockWidth, flockHeight);
     axonCanvas.parent('axon-holder');
 
-    axonOrigin = {x: a.width/2, y: a.height * .67};
+    axonOrigin = {x: a.width/2, y: a.height * .63};
 
     axonCanvas.mouseClicked(clickInteraction);
     axonCanvas.mouseMoved(mouseMoveInteraction);
